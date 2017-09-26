@@ -1,0 +1,182 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  padding-top: 60px;
+}
+
+@media (max-width: 979px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+#need{
+    height: 400px;
+    width: 400px;
+}
+
+#have{
+    height: 400px;
+    width: 400px;
+}
+
+#homeHead{
+    width: 20%;
+}
+
+#homeLeft{
+    float: left;
+    margin-left: 7.8%;
+    width : 6.25%;
+}
+
+#homeRight{
+    float: right;
+    margin-right: 7.8%;
+    width: 6.2%;
+}
+
+#suppLeft{
+    float: left;
+    height: 70px;
+    width: 32%;
+}
+
+#link{
+    height: 70px;
+    width: 36%;
+}
+
+#suppRight{
+    float: right;
+    height: 70px;
+    width: 32%;
+}
+
+.headButton{
+    color: white;
+    background-color: #B7303E;
+}
+
+.headButton:hover{
+    color: white;
+    background-color: #990000;
+}
+
+.procedure{
+	color: #B7303E;
+    font-family: cursive;
+}
+
+.copyright{
+    float: left;
+    color: #b30000;
+}
+
+.social{
+    float: right;
+    color: #b30000;
+}
+
+.social:hover{
+    color: #b30000;
+	text-decoration: underline;
+}
+
+.loginInp:focus{
+	border-color: red;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.homeBack {
+    text-align: center;
+    left: 0;
+    right: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .homeBack {
+    visibility: hidden;
+    display: none;
+  }
+}
+
+/*#contentMain{
+    margin-top: 50px;
+}*/
+
+.searchResult {
+    padding: 20px;
+    border-left: 6px solid maroon;
+    border-radius: 5px;
+    background-color: #ffcccc;
+}
+
+.about{
+    border-radius: 5px;
+    background-color: #ffcccc;
+}
+
+.about td:first-child{
+    width: 20%;
+    color: white;
+    background-color: #B7303E;
+}
+
+.removeButton{
+    color: red;
+    font-size: 20px;
+}
+
+.editButton{
+    font-size: 20px;
+}
+
+.editButton:hover{
+    color: maroon;
+    text-decoration: none;
+}
+
+th {
+    background-color: #B7303E;
+    color: white;
+}
+
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+.strike > span {
+    position: relative;
+    display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: black;
+}
+
+.strike > span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike > span:after {
+    left: 100%;
+    margin-left: 15px;
+}
+
+#offerTable tr:nth-child(even) {background-color: #ffcccc}

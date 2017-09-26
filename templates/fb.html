@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block jumbotron %}
+
+    <div class="jumbotron">
+        <div style="text-align:center">
+        	<h3 style="font-family:'Bookman'"><b>Hello {{ data.first_name }}!</b></h3>
+        	<br>
+        	<h4 style="font-family:'Bookman'">Just a few <b>Details</b> and we'll be good to go.</h4>
+        	<br>
+	   	    <form method="POST" action="/socialreg/">
+				{% csrf_token %}
+				<input type="text" name="Contact" placeholder="Contact">
+				<input style="width:400px" type="text" name="Address" placeholder="Address">
+				<input type="hidden" name="Name" value="{{data.name}}">
+				{% if data.email %}
+					<input type="hidden" name="email" value="{{data.email}}">
+				{% else %}
+					<input type="text" name="email" placeholder="Email Address">
+				{% endif %}
+				<br><br>
+				<input class="btn btn-lg btn-primary" type="submit" value="Submit" />
+		    </form>
+	    </div>
+
+    </div>
+{% endblock %}

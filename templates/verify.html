@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+        </div>
+{% endblock %}
+
+{% block logout %}
+{% endblock %}
+
+{% block jumbotron %}
+
+	<div class="jumbotron">
+		<div style="text-align:center">
+			<h4>Please enter your Password again to complete your registration</h4>
+			<div>
+				<form method="POST" action="/acc_verify/">
+					{% csrf_token %}
+		            {{ form.as_p }}
+		            <input class="btn btn-lg btn-danger" type="submit" value="Submit"/>
+				</form>
+	        </div>
+	    </div>
+	</div>
+
+	<script type="text/javascript">
+		(function init(){
+			document.getElementById('id_uid').value = {{uid}};
+			document.getElementById('id_uid').type = "hidden";
+		})()
+	</script>
+
+{% endblock %}
+
+{% block needs %}
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+        </div>
+{% endblock %}
+
+{% block logout %}
+<!-- 	<h4><a href="/account/">Update email</a></h4> -->
+{% endblock %}
+
+{% block jumbotron %}
+
+	<div class="jumbotron">
+		<div class="row">
+
+	        <div class="col-md-6">
+				<h3>Current Users:</h3>
+			    <table class="table">
+				    <thead>
+					    <tr>
+					    	<th>User ID</th>
+					    	<th>Name</th>
+					   		<th>Contact</th>
+					   		<th>Address</th>
+					   		<th>Email</th>
+					   		<th>Username</th>
+					   		<th>Login count</th>
+					    </tr>
+				    </thead>
+				    <tbody>
+						{% for i in det %}
+					    <tr>
+					    	<td> {{i.1}} </td>
+					    	<th> {{i.0}} </th>
+							<td> {{i.2}} </td>
+							<td> {{i.3}} </td>
+							<td> {{i.4}} </td>
+							<td> {{i.5}} </td>
+							<td> {{i.6}} </td>
+						</tr>
+						{% endfor %}
+					</tbody>
+			    </table>
+
+			    <h3>Auth user:</h3>
+			    <table class="table">
+				    <thead>
+					    <tr>
+					   		<th>username</th>
+					   		<th>last login</th>
+					   		<th>date joined</th>
+					   		<th>email</th>
+					    </tr>
+				    </thead>
+				    <tbody>
+						{% for i in auth %}
+					    <tr>
+							<td> {{i.4}} </td>
+							<td> {{i.2}} </td>
+							<td> {{i.10}} </td>
+							<td> {{i.7}} </td>
+						</tr>
+						{% endfor %}
+					</tbody>
+			    </table>
+
+			    <h3>Collection:</h3>
+			    <table class="table">
+				    <thead>
+					    <tr>
+					    	<th>userid</th>
+					   		<th>bookid</th>
+					   		<th>bookname</th>
+					    </tr>
+				    </thead>
+				    <tbody>
+						{% for i in coll %}
+					    <tr>
+							<td> {{i.1}} </td>
+							<td> {{i.2}} </td>
+							<td> {{i.3}} </td>
+						</tr>
+						{% endfor %}
+					</tbody>
+			    </table>
+
+	        </div>
+	        <div class="col-md-3 pull-right">
+	        	<h3>Delete Account:</h3>
+	        	<form method="POST" action="/admin446amol/">
+	        		{% csrf_token %}
+	        		<input type="text" name="user">
+	        		<input class="btn" type="submit" value="Submit">
+	        	</form>
+	        </div>
+	    </div>
+	</div>
+
+{% endblock %}
+
+{% block needs %}
+
+{% endblock %}

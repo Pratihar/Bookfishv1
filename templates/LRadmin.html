@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+        </div>
+{% endblock %}
+
+{% block logout %}
+  <h4><a href="/lrmanage/1/">Logout</a></h4>
+{% endblock %}
+
+{% block jumbotron %}
+  <h4><a href="/lrreq/">Show Requests</a></h4>
+  <div class="jumbotron">
+    <div class="row">
+          <div class="col-md-12">
+            <h3>Available Books:</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Serial</th>
+                    <th>Book</th>
+                    <th>Author</th>
+                    <th>Available</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <form id="book_options" method="POST" action="">
+                {% csrf_token %}
+                {% for i in det %}
+                  <tr>
+                    <th> {{i.7}} </th>
+                    <td> {{i.2}} </td>
+                    <td> {{i.3}} </td>
+                    <td>
+                    {% if i.8 == 0 %}
+                      <select name="{{i.1}}">
+                          <option value=1>Yes</option>
+                          <option selected="selected" value=0>No</option>
+                      </select>
+                      <!-- <input id="avail" name="avail" type="checkbox" value="{{i.1}}" checked> -->
+                    {% else %}
+                      <select name="{{i.1}}">
+                          <option selected="selected" value=1>Yes</option>
+                          <option value=0>No</option>
+                      </select>
+                      <!-- <input id="avail" name="avail" type="checkbox" value="{{i.1}}"> -->
+                    {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                  </tbody>
+              </table>
+                  <input type="button" value="Change" class="btn btn-default pull-right" data-dismiss="modal" onclick="submit()">
+                </form>
+              
+          </div>
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block needs %}
+
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block logout %}
+	<h4><a class="btn btn-danger" href="/">Sign out&nbsp<i class="fa fa-sign-out" aria-hidden="true"></i></a></h4>
+{% endblock %}
+
+{% block jumbotron %}
+
+	<div class="jumbotron">
+		<div class="row">
+	        <div class="table-responsive col-md-10 col-md-offset-1">
+				<h3>Current Owners:</h3>
+			    <table class="table">
+				    <thead>
+					    <tr>
+					    	<th>Name</th>
+					    	<th>Condition</th>
+					    	<th></th>
+					    </tr>
+					</thead>
+					<tbody>
+						{% for i in owners %}
+					    <tr>
+							<td style="width:50%;"> {{ i.2 }} </td>
+							<td> {{ i.1 }} year old </td>
+							<td><a class="btn btn-danger col-md-offset-4" style="cursor:pointer" onclick="uid.call(this)" id="{{i.0}}" data-toggle="modal" data-target="#requestModal"> Request </a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+			    </table>
+	        </div>
+	    </div>
+	</div>
+	<div id="requestModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h3 class="modal-title">Your Offer</h3>
+			    </div>
+			     <div class="modal-body">
+			        <form id="book_options" method="POST" action="/requests/">
+			        {% csrf_token %}
+					    <div class="form-group">
+					    	<input id="rid" type="hidden" name="req_book" value="{{reqbook}}">
+					    	<input id="uid" type="hidden" name="userid">
+
+					    	<table class="table" id="offerTable">
+					    		<caption><h4><b>Offer Book(s) from your Collection:</b></h4></caption>
+					  			<tbody>
+					  				{% if collect %}
+								    	{% for i in collect %}
+								    	<tr>
+								    		<td>{{ i.0 }}</td>
+								    		<td><input id="collect" name="collect" type="checkbox" value="{{i.1}}"></td>
+								    	</tr>
+										{% endfor %}
+									{% else %}
+										<tr>
+											<td><b>No books added yet :( Please add Books in your Collection.</b></td>
+										</tr>
+									{% endif %}
+								</tbody>
+							</table>
+
+							<div class="strike">
+							   <span>OR</span>
+							</div>
+
+							<table class="table">
+								<caption><h4><b>Offer Money:</b></h4></caption>
+								<tbody>
+									<tr>
+										<td>&#8377;<input size="5" type="text" name="cash" value=""></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+			        </form>
+		      	</div>
+		      	<div class="modal-footer">
+		        	<input type="button" value="Submit" class="btn btn-default" data-dismiss="modal" onclick="request()">
+		      	</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+		function uid(){
+			userid = $(this).attr('id');
+			document.getElementById('uid').value = userid;
+		}
+
+		function request() {
+			console.log("running");
+			document.getElementById('book_options').submit();
+		}
+
+		function accept() {
+			var title = document.getElementById("title").innerHTML;
+			console.log(title);
+			$.ajax({
+				type: "POST",
+	        	url: "/login/1/",
+	        	data : { title: title,
+	        			 'csrfmiddlewaretoken': '{{ csrf_token }}',
+	        			},
+	        /*	success : function(json) {
+	            $("#request-access").hide();
+	            console.log("requested access complete");
+        	}*/})
+			setTimeout("location.href = '/login/';",500);
+		}
+	</script>
+
+{% endblock %}
+
+{% block needs %}
+	
+	<div>
+		{% if title %}
+			<p id="title">{{ title }}</p>
+			<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#condModal">Add</button>
+		{% endif %}
+	</div>
+
+	<div id="condModel" class="model fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Modal Header</h4>
+			    </div>
+			      	<div class="modal-body">
+			        	<p>Some text in the modal.</p>
+			      	</div>
+			      	<div class="modal-footer">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      	</div>
+			    </div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function formsubmit() {
+			var title = document.getElementById("title").innerHTML;
+			console.log(title);
+			$.ajax({
+				type: "POST",
+	        	url: "/login/1/",
+	        	data : { title: title,
+	        			 'csrfmiddlewaretoken': '{{ csrf_token }}',
+	        			},
+	        /*	success : function(json) {
+	            $("#request-access").hide();
+	            console.log("requested access complete");
+        	}*/})
+			setTimeout("location.href = '/login/';",500);
+		}
+	</script>
+
+{% endblock %}

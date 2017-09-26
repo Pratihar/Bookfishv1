@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block logout %}
+	<h4><a class="btn btn-danger" href="/">Sign out&nbsp<i class="fa fa-sign-out" aria-hidden="true"></i></a></h4>
+{% endblock %}
+
+{% block jumbotron %}
+
+	<div class="jumbotron">
+		<ul class="nav nav-tabs">
+		  <li><a data-toggle="tab" href="#sent">Sent Requests</a></li>
+		  <li class="active"><a data-toggle="tab" href="#rec">Recieved Requests</a></li>
+		</ul>
+		<div class="tab-content">
+			<div id="sent" class="table-responsive tab-pane fade">
+			    <table class="table">
+				    <thead>
+					    <tr>
+					    	<th><a style="color:white">Book</a></th>
+					    	<th><a style="color:white">Books Offered</a></th>
+					    	<th><a style="color:white">Cash Offered</a></th>
+					    	<th><a style="color:white">Requested from</a></th>
+					    	<th><a style="color:white">Status</a></th>
+					    	<th></th>
+					    </tr>
+					</thead>
+					<tbody>
+						{% for i in sent_req %}
+					    <tr>
+							<td> {{ i.1 }} </td>
+							<td> {{ i.4 }} </td>
+							<td> {{ i.5 }} </td>
+							<td> {{ i.6 }} </td>
+							<td> {{ i.2 }} </td>
+							<td><a style="cursor:pointer" onclick="contact.call(this)" id="{{i.3}}" co="{{i.0}}" data-toggle="modal" data-target="#requestModal1"> Contact </a></td>
+							<div id="requestModal1" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+									    <div class="modal-header">
+									    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+									        <h3 class="modal-title">Contact</h3>
+									    </div>
+									     <div class="modal-body">
+							        		<h4>Call:</h4>
+											<p id="call"></p>
+											<h4>Email:</h4>
+											<p id="email"></p>
+								      	</div>
+									</div>
+								</div>
+							</div>
+							<script type="text/javascript">
+								(function init(){
+									var str = "{{i.2}}";
+									if (str != "Accepted") {
+										document.getElementById({{i.3}}).style.visibility = "hidden";
+									}
+								})()
+							</script>
+						</tr>
+						{% endfor %}
+					</tbody>
+			    </table>
+			</div>
+			<div id="rec" class="table-responsive tab-pane fade in active">
+			    <table class="table">
+				    <thead>
+					    <tr>
+					    	<th><a style="color:white">Book</a></th>
+					    	<th><a style="color:white">Books Offered</a></th>
+					    	<th><a style="color:white">Cash Offered</a></th>
+					    	<th><a style="color:white">Requested by</a></th>
+					    	<th><a style="color:white">Status</a></th>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    </tr>
+					</thead>
+					<tbody>
+						{% for i in rec_req %}
+					    <tr>
+							<td> {{ i.1 }} </td>
+							<td> {{ i.3 }} </td>
+							<td> {{ i.5 }} </td>
+							<td> {{ i.6 }} </td>
+							<td> {{ i.2 }} </td>
+							<td><a style="cursor:pointer" onclick="contactr.call(this)" id="cr{{i.4}}" co="{{i.0}}" data-toggle="modal" data-target="#requestModal2"> Contact </a></td>
+							
+							<div id="requestModal2" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+									    <div class="modal-header">
+									    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+									        <h3 class="modal-title">Contact</h3>
+									    </div>
+									     <div class="modal-body">
+							        		<h4>Call:</h4>
+											<p id="callr"></p>
+											<h4>Email:</h4>
+											<p id="emailr"></p>
+								      	</div>
+									</div>
+								</div>
+							</div>
+
+							<form method="POST" action="/req_accept/">
+								{% csrf_token %}
+								<input type="hidden" name="reqid" value="{{i.4}}">
+								<td id="fa{{i.4}}"><input class="btn btn-danger" type="submit" value="Accept"></td>
+							</form>
+							<form method="POST" action="/req_reject/">
+								{% csrf_token %}
+								<input type="hidden" name="reqid" value="{{i.4}}">
+								<td id="fr{{i.4}}"><input class="btn btn-danger" type="submit" value="Reject"></td>
+							</form>
+
+							<script type="text/javascript">
+								(function init1(){
+									var str = "{{i.2}}";
+									console.log(str);
+									if (str != "Accepted") {
+										document.getElementById("cr{{i.4}}").style.visibility = "hidden";
+										if (str == "Rejected") {
+											document.getElementById("fr{{i.4}}").style.visibility = "hidden";
+										}
+									}
+									else if (str == "Accepted") {
+											document.getElementById("fa{{i.4}}").style.visibility = "hidden";
+									}
+									}
+								)()
+							</script>
+						</tr>
+						{% endfor %}
+					</tbody>
+			    </table>
+		    </div>
+	    </div>
+	</div>
+	
+	<script type="text/javascript">
+
+		function uid(){
+			userid = $(this).attr('id');
+			document.getElementById('userid').value = userid;
+		}
+
+		function request() {
+			console.log("running");
+			document.getElementById('book_options').submit();
+		}
+
+		function accept() {
+			console.log("accept");
+			reqid = $(this).attr('id');
+			$.ajax({
+				type: "POST",
+	        	url: "/req_accept/",
+	        	data : { reqid: reqid,
+	        			 'csrfmiddlewaretoken': '{{ csrf_token }}',
+	        			},
+	        /*	success : function(json) {
+	            $("#request-access").hide();
+	            console.log("requested access complete");
+        	}*/})
+			setTimeout("location.href = '/requests/';",500);
+		}
+
+		function contact(){
+			console.log("contact");
+			var cont = $(this).attr('co');
+
+			{% for j in contacts %}
+				console.log("1loop");
+				if (cont == {{j.0.0}}){
+					console.log("2loop");
+					document.getElementById("call").innerHTML = "{{j.0.1}}";
+				    document.getElementById("email").innerHTML = "{{j.0.2}}";
+				}
+			{% endfor %}
+		}
+
+		function contactr(){
+			console.log("contactr");
+			var cont = $(this).attr('co');
+
+			{% for j in contacts %}
+				console.log("1loop");
+				if (cont == {{j.0.0}}){
+					console.log("2loop");
+					document.getElementById("callr").innerHTML = "{{j.0.1}}";
+				    document.getElementById("emailr").innerHTML = "{{j.0.2}}";
+				}
+			{% endfor %}
+		}	
+	</script>
+
+{% endblock %}
+
+{% block needs %}
+	
+	<div>
+		{% if title %}
+			<p id="title">{{ title }}</p>
+			<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#condModal">Add</button>
+		{% endif %}
+	</div>
+
+	<div id="condModel" class="model fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Modal Header</h4>
+			    </div>
+			      	<div class="modal-body">
+			        	<p>Some text in the modal.</p>
+			      	</div>
+			      	<div class="modal-footer">
+			        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      	</div>
+			    </div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function formsubmit() {
+			var title = document.getElementById("title").innerHTML;
+			console.log(title);
+			$.ajax({
+				type: "POST",
+	        	url: "/login/1/",
+	        	data : { title: title,
+	        			 'csrfmiddlewaretoken': '{{ csrf_token }}',
+	        			},
+	        /*	success : function(json) {
+	            $("#request-access").hide();
+	            console.log("requested access complete");
+        	}*/})
+			setTimeout("location.href = '/login/';",500);
+		}
+	</script>
+
+{% endblock %}
