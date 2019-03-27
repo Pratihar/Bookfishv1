@@ -207,28 +207,28 @@ class Migration(migrations.Migration):
                 'managed': False,
             },
         ),
-        migrations.CreateModel(
-            name='BookswapMister',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('hola', models.CharField(max_length=10)),
-            ],
-            options={
-                'db_table': 'bookswap_mister',
-            },
-        ),
-        migrations.CreateModel(
-            name='BookswapPerson',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=30)),
-                ('last_name', models.CharField(max_length=30)),
-                ('final', models.CharField(max_length=30)),
-            ],
-            options={
-                'db_table': 'bookswap_person',
-            },
-        ),
+        # migrations.CreateModel(
+        #     name='BookswapMister',
+        #     fields=[
+        #         ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        #         ('hola', models.CharField(max_length=10)),
+        #     ],
+        #     options={
+        #         'db_table': 'bookswap_mister',
+        #     },
+        # ),
+        # migrations.CreateModel(
+        #     name='BookswapPerson',
+        #     fields=[
+        #         ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        #         ('first_name', models.CharField(max_length=30)),
+        #         ('last_name', models.CharField(max_length=30)),
+        #         ('final', models.CharField(max_length=30)),
+        #     ],
+        #     options={
+        #         'db_table': 'bookswap_person',
+        #     },
+        # ),
         migrations.CreateModel(
             name='Collection',
             fields=[

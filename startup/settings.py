@@ -158,8 +158,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'ebdb',
         'USER': 'root',
-        'PASSWORD': 'bookfish446',
-        'HOST': 'aadqgn9k15s9kh.cwf3btudsw9r.ap-south-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        #'HOST': 'aadqgn9k15s9kh.cwf3btudsw9r.ap-south-1.rds.amazonaws.com',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }

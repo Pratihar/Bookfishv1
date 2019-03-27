@@ -7,7 +7,7 @@ import requests
 from .forms import user_details, login_details, book_search, email_update, mobile_update, pass_input
 from django.views.decorators.csrf import csrf_protect
 from django.core.mail import send_mail
-import MySQLdb
+#import MySQLdb
 import urllib2
 import urllib
 import urlparse
@@ -598,7 +598,9 @@ def home(request, flag = 0):
 
 			message = "Hello, " + name + "!"+ "\n \n" + "Click on this Link to complete your registration: " + "\n" + link + "\n \n" + "Cheers!\n" + "Team BookFish"
 			
-			send_mail('Account Activation', message, 'no-reply@bookfish.in', [email], fail_silently=False,)
+			#send_mail('Account Activation', message, 'no-reply@bookfish.in', [email], fail_silently=False,)
+
+			user = User.objects.create_user(username, email, password)
 
 			# except:
 			# 	conn.rollback()
